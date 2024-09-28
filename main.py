@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect, flash
 from forms import FormLogin, FormCriarConta
 
 # Inicialização da Função
@@ -24,7 +24,25 @@ def usuarios():
 def loginconta():
     form_login = FormLogin()
     form_criarconta = FormCriarConta()
+
+    if form_login.validate_on_submit() and 'btn_submit_login' in request.form:
+        print("Login válido")
+        flash(f'Login feito com sucesso no e-mail: {form_login.email.data}')
+        return redirect(url_for('homepage'))
+
+    if form_login.errors:
+        print("Erros no login:", form_login.errors)  # Adicione esta linha
+
+    if form_criarconta.validate_on_submit() and 'btn_submit_criarconta' in request.form:
+        print("Conta criada")
+        flash(f'Conta criada para o e-mail: {form_criarconta.email.data}')
+        return redirect(url_for('homepage'))
+
+    if form_criarconta.errors:
+        print("Erros na criação da conta:", form_criarconta.errors)  # Adicione esta linha
+
     return render_template('login-conta.html', form_login=form_login, form_criarconta=form_criarconta)
+
 
 
 
