@@ -1,8 +1,10 @@
 from flask import Flask, render_template, url_for
-
+from forms import FormLogin, FormCriarConta
 
 # Inicialização da Função
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'dfvbusvbdbcsubcxbufgefdg87dftrg67df'
 
 lista_usuarios = ['Arisson', 'Welisson']
 
@@ -18,9 +20,11 @@ def contato():
 def usuarios():
     return render_template('usuarios.html', lista_usuarios=lista_usuarios)
 
-@app.route('/login-conta')
+@app.route('/login-conta', methods=['GET', 'POST'])
 def loginconta():
-    return render_template('login-conta.html')
+    form_login = FormLogin()
+    form_criarconta = FormCriarConta()
+    return render_template('login-conta.html', form_login=form_login, form_criarconta=form_criarconta)
 
 
 

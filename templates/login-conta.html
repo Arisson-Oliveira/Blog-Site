@@ -1,23 +1,61 @@
 {% extends 'base.html' %}
 
 {% block body %}
-
-
-
-
 <div class="container text-center">
-    <div class="row">
-      <div class="col">
-        <h1>
-            Login
-        </h1>
-      </div>
-      <div class="col">
-        <h1>
-            Criar Conta
-        </h1>
-      </div>
-  
+    <h1 class="mb-4">Faça Login ou Crie sua Conta para continuar</h1>
 
+    <div class="row justify-content-center">
+        <!-- Formulário de Login -->
+        <div class="col-md-5">
+            <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded">
+                <legend class="text-center mb-4">Login</legend>
+                <fieldset>
+                    <div class="form-group mb-3">
+                        {{ form_login.email.label(class="form-label") }}
+                        {{ form_login.email(class="form-control") }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form_login.senha.label(class="form-label") }}
+                        {{ form_login.senha(class="form-control") }}
+                    </div>
+                    <div class="form-check mb-3">
+                        {{ form_login.lembrar_login(class="form-check-input") }}
+                        {{ form_login.lembrar_login.label(class="form-check-label") }}
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-primary w-100">
 
+                    {{ form_login.btn_submit_login(class="btn btn-primary w-100") }}
+                
+                </button> <!-- Corrigido -->
+            </form>
+        </div>
+
+        <!-- Formulário de Criar Conta -->
+        <div class="col-md-5">
+            <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded">
+                <legend class="text-center mb-4" >Criar Conta</legend>
+                <fieldset>
+                    <div class="form-group mb-3">
+                        {{ form_criarconta.username.label(class="form-label") }}
+                        {{ form_criarconta.username(class="form-control") }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form_criarconta.email.label(class="form-label") }}
+                        {{ form_criarconta.email(class="form-control") }}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form_criarconta.senha.label(class="form-label") }}
+                        {{ form_criarconta.senha(class="form-control") }}
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-success w-100">
+                    
+                    {{ form_criarconta.btn_submit_criarconta(class="btn btn-success w-100") }}
+
+                </button> <!-- Sem fundo branco -->
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
