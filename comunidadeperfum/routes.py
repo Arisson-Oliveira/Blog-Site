@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
-from comunidadeperfum.forms import FormLogin, FormCriarConta
+from comunidadeperfum.forms import FormLogin, FormCriarConta, Email
 from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
