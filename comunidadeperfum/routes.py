@@ -1,7 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 from comunidadeperfum.forms import FormLogin, FormCriarConta
+from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
-from comunidadeperfum import app
+from comunidadeperfum import app, database, bcrypt
 
 lista_usuarios = []
 
@@ -32,6 +33,10 @@ def loginconta():
 
     if form_criarconta.validate_on_submit() and 'btn_submit_criarconta' in request.form:
         print("Conta criada")
+        senha_crypt = bcrypt.generate_password_hash(form_criarconta.senha.data)
+        usuario = Usuario(username=form_criarconta.username.data, email=form_criarconta.email.data,senha=senha_crypt)
+        database.session.add(usuario)
+        database.session.commit()
         flash(f'Conta criada para o e-mail: {form_criarconta.email.data}')
         return redirect(url_for('homepage'))
 
