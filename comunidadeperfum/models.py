@@ -1,5 +1,5 @@
 # Arquivo para modelo de Banco de Dados
-from main import database
+from comunidadeperfum import database
 from datetime import datetime
 
 class Usuario(database.Model):
