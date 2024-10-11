@@ -3,7 +3,7 @@ from comunidadeperfum.forms import FormLogin, FormCriarConta, Email
 from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
-from flask_login import login_user
+from flask_login import login_user, logout_user, current_user
 
 lista_usuarios = []
 
@@ -50,3 +50,18 @@ def loginconta():
         print("Erros na criação da conta:", form_criarconta.errors)  # Adicione esta linha
 
     return render_template('login-conta.html', form_login=form_login, form_criarconta=form_criarconta)
+
+
+@app.route('/sair')
+def sair():
+    logout_user()
+    flash(f'Logout feito com sucesso', 'alert-success')
+    return redirect(url_for('homepage'))
+
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
+
+@app.route('/post/criar')
+def criar_post():
+    return render_template('criarpost.html')
