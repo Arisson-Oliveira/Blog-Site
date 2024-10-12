@@ -3,7 +3,7 @@ from comunidadeperfum.forms import FormLogin, FormCriarConta, Email
 from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 lista_usuarios = []
 
@@ -16,6 +16,7 @@ def contato():
     return render_template('contato.html')
 
 @app.route('/usuarios')
+@login_required
 def usuarios():
     return render_template('usuarios.html', lista_usuarios=lista_usuarios)
 
@@ -29,8 +30,12 @@ def loginconta():
         if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
             login_user(usuario, remember=form_login.lembrar_login.data)
             print("Login válido")
-            flash(f'Login feito com sucesso no e-mail: {form_login.email.data}', 'alert-success')
-            return redirect(url_for('homepage'))
+            flash(f'Login feito com sucesso no e-mail: {form_login.email.data}')
+            par_next  = request.args.get('next')
+            if par_next:
+                return render_template(par_next)
+            else:
+                return redirect(url_for('homepage'))
         else:
             flash('Falha no Login. E-mail ou Senha Incorretos.', 'alert-danger')
 
@@ -53,15 +58,18 @@ def loginconta():
 
 
 @app.route('/sair')
+@login_required
 def sair():
     logout_user()
-    flash(f'Logout feito com sucesso', 'alert-success')
+    flash(f'Logout feito com sucesso')
     return redirect(url_for('homepage'))
 
 @app.route('/perfil')
+@login_required
 def perfil():
-    return render_template('perfil.html')
+    return render_template('perfil.html', usuario=current_user)
 
 @app.route('/post/criar')
+@login_required
 def criar_post():
     return render_template('criarpost.html')
