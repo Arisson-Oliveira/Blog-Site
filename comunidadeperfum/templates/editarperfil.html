@@ -50,6 +50,18 @@
 
                     {% endif %}
                     </div>
+                    <hr>
+                    <p>Preferências Alfáticas</p>
+
+                    {% for campo in form %}
+                        {% if 'perfume_' in campo.name %}
+                        <div class="form-check mb-3 d-flex align-items-center">
+                            {{ campo.label(class="form-check-label order-2") }}
+                            {{ campo(class="form-check-input order-1 ms-2") }}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+
                 </fieldset>
                 <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
                     {{ form.btn_submit_editarperfil.label }}

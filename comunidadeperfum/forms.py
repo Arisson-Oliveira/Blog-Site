@@ -39,6 +39,13 @@ class FormEditarPerfil(FlaskForm):
     foto_perfil = FileField('Atualizar Foto de Perfil', validators=[FileAllowed(['png', 'jpg', 'jpeg'])])
     btn_submit_editarperfil = SubmitField('Confirmar Edição', validators=[])
 
+    perfume_doce = BooleanField('Perfume Doce')
+    perfume_citrico = BooleanField('Perfume Cítrico')
+    perfume_amadeirado = BooleanField('Perfume Amadeirado')
+    perfume_caramelado = BooleanField('Perfume Caramelado')
+    perfume_quente = BooleanField('Perfume Quente')
+    perfume_suave = BooleanField('Perfume Suave')
+
     def validate_email(self, email):
         if current_user.email != email.data:
             usuario = Usuario.query.filter_by(email=email.data).first()
