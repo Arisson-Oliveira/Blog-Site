@@ -3,13 +3,56 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container mt-5">
+    
+    <div class="row d-flex justify-content-center">
+        
+        <div class="col-md-7">
+            
+            <div class="card p-3 py-4">
+                
+                <div class="text-center">
+                    <img src="{{ foto_perfil }}" width="100" class="rounded-circle">
+                </div>
+                
+                <div class="text-center mt-3">
+                    <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
+                    <h5 class="mt-2 mb-0">{{ current_user.username }}</h5>
+                    <span>UI/UX Designer</span>
+                    
+                    <div class="px-4 mt-1">
+                        <p class="fonts">Olá, meu nome é Arisson Oliveira. Sou desenvolvedor Python e forneço serviços Web. Que tal me chamar para fazer um orçamento? </p>
+                    
+                    </div>
+                    
+                     <ul class="social-list">
+                        <li><i class="fa fa-facebook"></i></li>
+                        <li><i class="fa fa-dribbble"></i></li>
+                        <li><i class="fa fa-instagram"></i></li>
+                        <li><i class="fa fa-linkedin"></i></li>
+                        <li><i class="fa fa-google"></i></li>
+                    </ul>
+                    
+                    <div class="buttons">
+                        
+                        <a 
+                            href="{{ url_for('editar_perfil') }}"><button class="btn btn-outline-primary px-4">Editar Perfil</button>
+                        </a>
+                        
+                        <button class="btn btn-primary px-4 ms-3">Seguir</button>
+                    </div>
+                    
+                    
+                </div>
 
-    <h1>
-        Meu Perfil: {{ usuario.username }}
-    </h1>
+            </div>
+            
+        </div>
+        
+    </div>
     
 </div>
 
-
+{% block form_editar_perfil %}
+{% endblock %}
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'perfil.html' %}
+
+{% block form_editar_perfil %}
+
+<div class="container text-center">
+    <hr>
+    <div class="row justify-content-center">
+        <!-- Formulário Editar Perfil -->
+        <div class="col-md-5">
+            <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded">
+                {{ form.csrf_token }}
+                <legend class="text-center mb-4">Login</legend>
+                <fieldset>
+                    <div class="form-group mb-3">
+                        {{ form.username.label(class="form-label") }}
+                        
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form.username.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form.username(class="form-control") }}
+                            {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.email.label(class="form-label") }}
+                        
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form.email.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form.email(class="form-control") }}
+                            {% endif %}
+                    </div>
+                </fieldset>
+                <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
+                    {{ form.btn_submit_editarperfil.label }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

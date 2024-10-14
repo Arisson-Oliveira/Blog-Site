@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
-from comunidadeperfum.forms import FormLogin, FormCriarConta, Email
+from comunidadeperfum.forms import FormLogin, FormCriarConta, FormEditarPerfil, Email
 from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
@@ -30,14 +30,14 @@ def loginconta():
         if usuario and bcrypt.check_password_hash(usuario.senha, form_login.senha.data):
             login_user(usuario, remember=form_login.lembrar_login.data)
             print("Login válido")
-            flash(f'Login feito com sucesso no e-mail: {form_login.email.data}')
+            flash(f'Login feito com sucesso no e-mail: {form_login.email.data}', 'success')
             par_next  = request.args.get('next')
             if par_next:
                 return render_template(par_next)
             else:
                 return redirect(url_for('homepage'))
         else:
-            flash('Falha no Login. E-mail ou Senha Incorretos.', 'alert-danger')
+            flash('Falha no Login. E-mail ou Senha Incorretos.', 'danger')
 
     if form_login.errors:
         print("Erros no login:", form_login.errors)  # Adicione esta linha
@@ -48,7 +48,7 @@ def loginconta():
         usuario = Usuario(username=form_criarconta.username.data, email=form_criarconta.email.data,senha=senha_crypt)
         database.session.add(usuario)
         database.session.commit()
-        flash(f'Conta criada para o e-mail: {form_criarconta.email.data}', 'alert-success')
+        flash(f'Conta criada para o e-mail: {form_criarconta.email.data}', 'success')
         return redirect(url_for('homepage'))
 
     if form_criarconta.errors:
@@ -61,13 +61,23 @@ def loginconta():
 @login_required
 def sair():
     logout_user()
-    flash(f'Logout feito com sucesso')
+    flash(f'Logout feito com sucesso', 'success')
     return redirect(url_for('homepage'))
 
 @app.route('/perfil')
 @login_required
 def perfil():
-    return render_template('perfil.html', usuario=current_user)
+    foto_perfil = url_for('static', filename=f'images/{current_user.foto_perfil}')
+    
+    return render_template('perfil.html', usuario=current_user, foto_perfil=foto_perfil)
+
+@app.route('/perfil/editar', methods=['GET', 'POST'])
+@login_required
+def editar_perfil():
+    form = FormEditarPerfil()
+    foto_perfil = url_for('static', filename=f'images/{current_user.foto_perfil}')
+
+    return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
 @app.route('/post/criar')
 @login_required
