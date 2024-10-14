@@ -31,16 +31,19 @@ def loginconta():
             login_user(usuario, remember=form_login.lembrar_login.data)
             print("Login válido")
             flash(f'Login feito com sucesso no e-mail: {form_login.email.data}', 'success')
-            par_next  = request.args.get('next')
+
+            par_next = request.args.get('next')
             if par_next:
-                return render_template(par_next)
+                return redirect(par_next)  
             else:
                 return redirect(url_for('homepage'))
         else:
             flash('Falha no Login. E-mail ou Senha Incorretos.', 'danger')
 
+    return render_template('login-conta.html', form_login=form_login, form_criarconta=form_criarconta)
+
     if form_login.errors:
-        print("Erros no login:", form_login.errors)  # Adicione esta linha
+        print("Erros no login:", form_login.errors) 
 
     if form_criarconta.validate_on_submit() and 'btn_submit_criarconta' in request.form:
         print("Conta criada")
@@ -75,6 +78,15 @@ def perfil():
 @login_required
 def editar_perfil():
     form = FormEditarPerfil()
+    if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        database.session.commit()
+        flash(f'Perfil atualizado com sucesso.', 'success')
+        return redirect(url_for('perfil'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     foto_perfil = url_for('static', filename=f'images/{current_user.foto_perfil}')
 
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
