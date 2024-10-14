@@ -38,10 +38,11 @@
                                 {{ form_login.senha(class="form-control") }}
                             {% endif %}
                     </div>
-                    <div class="form-check mb-3">
-                        {{ form_login.lembrar_login(class="form-check-input") }}
-                        {{ form_login.lembrar_login.label(class="form-check-label") }}
+                    <div class="form-check mb-3 d-flex align-items-center">
+                        {{ form_login.lembrar_login(class="form-check-input order-2 ms-2") }} 
+                        {{ form_login.lembrar_login.label(class="form-check-label order-1") }} >
                     </div>
+                                        
                 </fieldset>
                 <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
                     {{ form_login.btn_submit_login.label }}

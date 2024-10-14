@@ -4,6 +4,9 @@ from comunidadeperfum.models import Usuario
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
 from flask_login import login_user, logout_user, current_user, login_required
+import secrets
+import os
+from PIL import Image
 
 lista_usuarios = []
 
@@ -74,6 +77,25 @@ def perfil():
     
     return render_template('perfil.html', usuario=current_user, foto_perfil=foto_perfil)
 
+# Reduzir essa função um dia
+
+def salvar_imagem(imagem):
+    codigo = secrets.token_hex(8)
+    nome, extensao = os.path.splitext(imagem.filename)
+    nome_completo = os.path.join(nome, codigo, extensao)
+    nome_arquivo = nome + codigo + extensao
+
+    caminho_completo = os.path.join(app.root_path, 'static/images', nome_arquivo)
+
+    tamanho = (200, 200)
+    imagem_reduzida = Image.open(imagem)
+    imagem_reduzida.thumbnail(tamanho)
+
+    imagem_reduzida.save(caminho_completo)
+
+    return nome_arquivo
+
+
 @app.route('/perfil/editar', methods=['GET', 'POST'])
 @login_required
 def editar_perfil():
@@ -81,6 +103,9 @@ def editar_perfil():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        if form.foto_perfil.data:
+            nome_imagem = salvar_imagem(form.foto_perfil.data)
+            current_user.foto_perfil = nome_imagem
         database.session.commit()
         flash(f'Perfil atualizado com sucesso.', 'success')
         return redirect(url_for('perfil'))

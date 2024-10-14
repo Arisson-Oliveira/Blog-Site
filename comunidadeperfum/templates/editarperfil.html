@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <!-- Formulário Editar Perfil -->
         <div class="col-md-5">
-            <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded">
+            <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded" enctype="multipart/form-data">
                 {{ form.csrf_token }}
                 <legend class="text-center mb-4">Login</legend>
                 <fieldset>
@@ -38,6 +38,17 @@
                             {% else %}
                                 {{ form.email(class="form-control") }}
                             {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.foto_perfil.label }}
+                        {{ form.foto_perfil(class="form-control-file") }}
+                        {% if form.foto_perfil.errors %}
+
+                        {% for erro in form.foto_perfil.errors %}
+                            <span class="text-danger">{{ erro }}</span><br>
+                        {% endfor %}
+
+                    {% endif %}
                     </div>
                 </fieldset>
                 <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
