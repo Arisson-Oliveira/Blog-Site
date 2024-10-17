@@ -4,17 +4,22 @@
 
 {% block body %}
 
+<div class="container nt-3">
+    <h1>Blog Amantes de Pefumes - Arisson Oliveira</h1>
+    <h2>Descubra novos perfumes em nossa Comunidade!</h2>
+    <hr>
+    {% for post in posts %}
+    <div class="rol border mt-4 p-3 meupost">
+        <div class="col-3">
 
-
-
-<div class="container">
-    
-    
-    <h1>Blog Amantes de Pefumes</h1>
-    
+        </div>
+        <div class="col-9">
+            <h3>{{ post.titulo }}</h3>
+            <p>{{ post.corpo }}</p>
+        </div>
+    </div>
+    {% endfor%}
 </div>
-
-{{ posts}}
 
 
 {% endblock %}
