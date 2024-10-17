@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
-from comunidadeperfum.forms import FormLogin, FormCriarConta, FormEditarPerfil, Email
-from comunidadeperfum.models import Usuario
+from comunidadeperfum.forms import FormLogin, FormCriarConta, FormEditarPerfil,FormCriarPost, Email
+from comunidadeperfum.models import Usuario, Post
 from flask_sqlalchemy import SQLAlchemy
 from comunidadeperfum import app, database, bcrypt
 from flask_login import login_user, logout_user, current_user, login_required
@@ -12,7 +12,8 @@ lista_usuarios = []
 
 @app.route('/')
 def homepage():
-    return render_template('home.html')
+    posts = Post.query.all()
+    return render_template('home.html', posts=posts)
 
 @app.route('/contato')
 def contato():
@@ -122,7 +123,14 @@ def editar_perfil():
 
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
-@app.route('/post/criar')
+@app.route('/post/criar', methods=['GET', 'POST'])
 @login_required
 def criar_post():
-    return render_template('criarpost.html')
+    form = FormCriarPost()
+    if form.validate_on_submit():
+        post = Post(titulo=form.titulo.data, corpo=form.corpo.data, autor=current_user)
+        database.session.add(post)
+        database.session.commit()
+        flash('Post criado com sucesso!', 'success')
+        return redirect(url_for('homepage'))
+    return render_template('criarpost.html', form=form)
