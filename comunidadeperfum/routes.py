@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, abort
 from comunidadeperfum.forms import FormLogin, FormCriarConta, FormEditarPerfil,FormCriarPost, Email
 from comunidadeperfum.models import Usuario, Post
 from flask_sqlalchemy import SQLAlchemy
@@ -12,7 +12,7 @@ lista_usuarios = []
 
 @app.route('/')
 def homepage():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.id.desc())
     return render_template('home.html', posts=posts)
 
 @app.route('/contato')
@@ -134,3 +134,43 @@ def criar_post():
         flash('Post criado com sucesso!', 'success')
         return redirect(url_for('homepage'))
     return render_template('criarpost.html', form=form)
+
+
+@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@login_required
+def exibir_post(post_id):
+    post = Post.query.get(post_id)
+    
+    if post is None:
+        flash('Postagem não encontrada.', 'danger')
+        return redirect(url_for('homepage'))
+    
+    if current_user == post.autor:
+        form = FormCriarPost()
+        if request.method == 'GET':
+            form.titulo.data = post.titulo
+            form.corpo.data = post.corpo
+        elif form.validate_on_submit():
+            post.titulo = form.titulo.data
+            post.corpo = form.corpo.data
+
+            database.session.commit()
+            flash('Postagem editada com sucesso.', 'success')
+            return redirect(url_for('homepage'))
+    else:
+        form = None
+
+    return render_template('post.html', post=post, form=form)
+
+@app.route('/post/<post_id>/excluir', methods=['GET', 'POST'])
+@login_required
+def excluir_post(post_id):
+    post = Post.query.get(post_id)
+    if current_user == post.autor:
+        database.session.delete(post)
+        database.session.commit()
+        flash('Postagem deletada com sucesso.', 'danger')
+    else:
+        abort(403)
+        
+    return redirect(url_for('homepage'))

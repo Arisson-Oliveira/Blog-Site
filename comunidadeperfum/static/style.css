@@ -84,5 +84,27 @@ body{
 
 .meupost{
     background-color: rgba(128, 128, 128, 0.429);
+    width: 80%; /* Ou ajuste conforme necessário */
+    max-width: 900px; /* Limita a largura máxima */
+    background-size: cover; /* Ou 'contain' dependendo do comportamento desejado */
+    background-repeat: no-repeat;
+    padding: 20px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
 
+.c-perfume{
+    width: 40em;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.link-post:hover{
+    text-decoration: underline;
+    color: blue;
+}
+.small{
+    color: red;
 }

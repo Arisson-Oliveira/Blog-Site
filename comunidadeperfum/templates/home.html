@@ -5,16 +5,35 @@
 {% block body %}
 
 <div class="container nt-3">
-    <h1>Blog Amantes de Pefumes - Arisson Oliveira</h1>
+    <h1>Comunidade Amantes de Pefumes - Arisson Oliveira</h1>
     <h2>Descubra novos perfumes em nossa Comunidade!</h2>
     <hr>
     {% for post in posts %}
-    <div class="rol border mt-4 p-3 meupost">
-        <div class="col-3">
-
+    <div class="rol border mt-4 p-3 rounded-4 meupost">
+        <div class="col col-8 p-4">
+            <img src="{{ url_for('static', filename='images/' + (post.autor.foto_perfil)) }}" width="40" class="rounded-circle perfil-home">
+            <strong class="p-2">
+                {{ post.autor.username }} <small class="text-muted" style="font-size: 12px;"> - {{ post.data_criacao.strftime('%d/%m/%Y %H:%M') }}
+                    {% if form %}
+                         - Editar Postagem
+                    {% endif %}
+                </small>
+            </strong>
+            <div class="row justify-content-center">
+                <div class="col" style="text-align: center">
+                    <div class="d-flex justify-content-center c-perfume">
+                        {% for perfume in post.autor.perfumes.split(';') %}
+                            <button type="button" class="btn btn-success mt-2 me-2" disabled>{{ perfume }}</button>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-9">
-            <h3>{{ post.titulo }}</h3>
+            <a href="{{ url_for('exibir_post', post_id=post.id)}}" class="link-post">
+                <h3>{{ post.titulo }}</h3>
+            </a>
+            
             <p>{{ post.corpo }}</p>
         </div>
     </div>
