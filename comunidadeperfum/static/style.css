@@ -1,110 +1,221 @@
-body{
-    background:#eee;
+/* Paleta de Cores */
+:root {
+    --color-primary: #7e5a9b; /* Roxo suave */
+    --color-secondary: #d4c2e8; /* Lilás claro */
+    --color-accent: #5b3a6b; /* Roxo escuro */
+    --color-background: #f7f3fa; /* Fundo claro */
+    --color-text-dark: #333;
+    --color-text-light: #fff;
 }
 
-.card{
-    border:none;
-
-    position:relative;
-    overflow:hidden;
-    border-radius:8px;
-    cursor:pointer;
+/* Background principal */
+body {
+    background: var(--color-background);
+    font-family: Arial, sans-serif;
 }
 
-.card:before{
-    
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    width:4px;
-    height:100%;
-    background-color:#E1BEE7;
-    transform:scaleY(1);
-    transition:all 0.5s;
-    transform-origin: bottom
+/* Container */
+.container h1 {
+    color: var(--color-primary);
+    font-size: 48px;
 }
 
-.card:after{
-    
-    content:"";
-    position:absolute;
-    left:0;
-    top:0;
-    width:4px;
-    height:100%;
-    background-color:#8E24AA;
-    transform:scaleY(0);
-    transition:all 0.5s;
-    transform-origin: bottom
-}
-
-.card:hover::after{
-    transform:scaleY(1);
-}
-
-
-.fonts{
-    font-size:15px;
-}
-
-.social-list{
-    display:flex;
-    list-style:none;
-    justify-content:center;
-    padding:0;
-}
-
-.social-list li{
-    padding:10px;
-    color:#8E24AA;
-    font-size:19px;
-}
-
-
-.buttons button:nth-child(1){
-       border:1px solid #8E24AA !important;
-       color:#8E24AA;
-       height:40px;
-}
-
-.buttons button:nth-child(1):hover{
-       border:1px solid #8E24AA !important;
-       color:#fff;
-       height:40px;
-       background-color:#8E24AA;
-}
-
-.buttons button:nth-child(2){
-       border:1px solid #8E24AA !important;
-       background-color:#8E24AA;
-       color:#fff;
-        height:40px;
-}
-
-.meupost{
-    background-color: rgba(128, 128, 128, 0.429);
-    width: 80%; /* Ou ajuste conforme necessário */
-    max-width: 900px; /* Limita a largura máxima */
-    background-size: cover; /* Ou 'contain' dependendo do comportamento desejado */
-    background-repeat: no-repeat;
+/* Formulários */
+form {
+    background: var(--color-text-light);
+    border-radius: 8px;
     padding: 20px;
-    margin: 0 auto; /* Centraliza horizontalmente */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.c-perfume{
-    width: 40em;
+form h2 {
+    color: var(--color-primary);
 }
 
-a{
-    text-decoration: none;
-    color: black;
+.form-label {
+    font-weight: bold;
+    color: var(--color-primary);
 }
 
-.link-post:hover{
-    text-decoration: underline;
-    color: blue;
+/* Campos de Entrada */
+.form-control {
+    border-radius: 4px;
+    border: 1px solid var(--color-secondary);
+    transition: border-color 0.3s;
 }
-.small{
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 5px rgba(126, 90, 155, 0.4);
+}
+
+/* Botões */
+.btn-primary, .btn-success {
+    font-weight: bold;
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover, .btn-success:hover {
+    background-color: var(--color-accent);
+}
+
+/* Feedback de Erro */
+.invalid-feedback {
     color: red;
+    font-size: 0.9em;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: var(--color-accent);
+}
+
+.link-post:hover {
+    text-decoration: underline;
+    color: var(--color-primary);
+}
+
+/* Cartões */
+.card {
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--color-secondary);
+    transform: scaleY(1);
+    transition: all 0.5s;
+    transform-origin: bottom;
+}
+
+.card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background-color: var(--color-accent);
+    transform: scaleY(0);
+    transition: all 0.5s;
+    transform-origin: bottom;
+}
+
+.card:hover::after {
+    transform: scaleY(1);
+}
+
+/* Social List */
+.social-list {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+}
+
+.social-list li {
+    padding: 10px;
+    color: var(--color-primary);
+    font-size: 19px;
+}
+
+/* Botões de Perfume */
+.buttons button:nth-child(1) {
+    border: 1px solid var(--color-accent) !important;
+    color: var(--color-accent);
+    height: 40px;
+}
+
+.buttons button:nth-child(1):hover {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+}
+
+.buttons button:nth-child(2) {
+    border: 1px solid var(--color-accent) !important;
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+    height: 40px;
+}
+
+
+/* Estilo comum para todos os formulários */
+form {
+    width: 100%;
+    max-width: 700px;  /* Largura máxima para os formulários */
+    min-height: 500px;  /* Garantindo que ambos tenham a mesma altura */
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Para o formulário "Login" */
+form#login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espaçamento uniforme entre os campos do formulário de login */
+}
+
+form#criar-conta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajustando os inputs do formulário de login */
+.form-control {
+    width: 100%;
+    max-width: 700px; /* Garante que os inputs tenham o mesmo tamanho proporcional */
+    height: 40px; /* Altura fixa para os inputs */
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+}
+
+/* Ajustando o botão de submit do formulário de login */
+button[type="submit"] {
+    width: 100%;
+    max-width: 300px;
+    height: 45px;  /* Ajustando o tamanho do botão */
+    background-color: #8E24AA; /* Cor do botão */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover no botão */
+button[type="submit"]:hover {
+    background-color: #7b1fa2;  /* Cor do botão ao passar o mouse */
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+    form {
+        max-width: 100%;
+        min-height: 500px;  /* Mantém a altura igual para ambos em telas menores */
+    }
 }

@@ -100,6 +100,7 @@ def editar_perfil():
     if form.validate_on_submit():
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.bio = form.bio.data
         if form.foto_perfil.data:
             nome_imagem = salvar_imagem(form.foto_perfil.data)
             current_user.foto_perfil = nome_imagem
@@ -112,6 +113,10 @@ def editar_perfil():
         # Preencher os campos com os dados atuais do usuário
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.bio.data = current_user.perfil_bio
+
+        if form.bio.data:
+            current_user.perfil_bio = form.bio.data
         
         # Obter perfumes do usuário e preencher os campos booleanos
         perfumes_usuario = current_user.perfumes.split(';') if current_user.perfumes else []

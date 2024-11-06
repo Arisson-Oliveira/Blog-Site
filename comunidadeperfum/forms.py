@@ -36,6 +36,7 @@ class FormLogin(FlaskForm):
 class FormEditarPerfil(FlaskForm):
     username = StringField('Nome de Usuário', validators=[DataRequired()])
     email = StringField('E-mail', validators=[DataRequired(), Email()])
+    bio = StringField('Bio', validators=[Length(2, 20)])
     foto_perfil = FileField('Atualizar Foto de Perfil', validators=[FileAllowed(['png', 'jpg', 'jpeg'])])
     btn_submit_editarperfil = SubmitField('Confirmar Edição', validators=[])
 
