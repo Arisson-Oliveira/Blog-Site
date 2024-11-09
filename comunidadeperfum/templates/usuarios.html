@@ -5,58 +5,70 @@
 {% block body %}
 
 
-    <div class="container">
-        <h1>Usuários</h1>
+<div class="container">
+    <h1 class="title">Usuários da Comunidade</h1>
 
-        {% for usuario in lista_usuarios %}
-        
+    {% for usuario in lista_usuarios %}
         <div class="container mt-5">
-    
-    <div class="row d-flex justify-content-center">
-        
-        <div class="col-md-7">
-            
-            <div class="card p-3 py-4">
-                
-                <div class="text-center">
-                    <img src="{{ url_for('static', filename='images/' + (usuario.foto_perfil or 'default.jpg')) }}" width="100" class="rounded-circle">
-                </div>
-                
-                <div class="text-center mt-3">
-                    <span class="bg-secondary p-1 px-4 rounded text-white">{{ usuario.username }}</span>
-                    <h5 class="mt-2 mb-0">{{ usuario.email }}</h5>
-                    <!---- <span>UI/UX Designer</span> -->
-
-                    
-                    <div class="row justify-content-center">
-                        <div class="col col-12" style="text-align: center">
-                            <strong>Preferências Alfáticas</strong><br>
-                            <div class="d-flex flex-wrap justify-content-center">
-                                {% for perfume in usuario.perfumes.split(';') %}
-                                    <button type="button" class="btn btn-success mt-2 me-2" disabled>{{ perfume }}</button>
-                                {% endfor %}
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-7">
+                    <div class="card p-3 py-4">
+                        <div class="text-center">
+                            <img src="{{ url_for('static', filename='images/' + (usuario.foto_perfil or 'default.jpg')) }}" width="100" class="rounded-circle">
+                        </div>
+                        <div class="text-center mt-3">
+                            <span class="bg-secondary p-1 px-4 rounded text-white">{{ usuario.username }}</span>
+                            <h5 class="mt-2 mb-0">{{ usuario.email }}</h5>
+                            <div class="row justify-content-center">
+                                <div class="col col-12" style="text-align: center">
+                                    <strong>Preferências Alfáticas</strong><br>
+                                    <div class="d-flex flex-wrap justify-content-center">
+                                        {% for perfume in usuario.perfumes.split(';') %}
+                                            <button type="button" class="btn btn-success mt-2 me-2" disabled>{{ perfume }}</button>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="btn btn-primary-rede px-4 ms-3" type="submit">Seguir</button>
+                                </div>
                             </div>
+                            <ul class="social-list">
+                                <li><i class="fa fa-instagram"></i></li>
+                                <li><i class="fa fa-linkedin"></i></li>
+                            </ul>
                         </div>
                     </div>
-                                      
-
-                     <ul class="social-list">
-                        <li><i class="fa fa-instagram"></i></li>
-                        <li><i class="fa fa-linkedin"></i></li>
-                    </ul>
                 </div>
-
             </div>
-            
         </div>
-        
-    </div>
-    
+    {% endfor %}
 </div>
-        
-        {% endfor %}
-        
-    </div>
+
+<!-- CSS -->
+<style>
+    /* Estilo do Título */
+    .title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    /* Linha decorativa abaixo do título */
+    .title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background-color: #007bff;
+        margin: 8px auto 0;
+        border-radius: 4px;
+    }
+</style>
+
 
 
 {% endblock %}

@@ -1,45 +1,81 @@
 {% extends 'base.html' %}
 
-
-
 {% block body %}
-
-<div class="container nt-3">
-    <h1>Comunidade Amantes de Pefumes - Arisson Oliveira</h1>
-    <h2>Descubra novos perfumes em nossa Comunidade!</h2>
-    <hr>
+<div class="container mt-5">
+    <!-- Título do Site Simples e Agradável -->
+    <h1 class="text-center title" style="font-family: 'Arial', sans-serif; font-weight: bold; color: #333; font-size: 2.5em;">
+        Comunidade Amantes de Perfumes
+    </h1>
+    <h2 class="text-center mb-4" style="font-family: 'Arial', sans-serif; font-size: 1.2em; color: #555;">
+        Descubra e compartilhe sua paixão por perfumes!
+    </h2>
+    <hr class="mb-4" style="border-top: 2px solid #4b2e83;">
+    
     {% for post in posts %}
-    <div class="rol border mt-4 p-3 rounded-4 meupost">
-        <div class="col col-8 p-4">
-            <img src="{{ url_for('static', filename='images/' + (post.autor.foto_perfil)) }}" width="40" class="rounded-circle perfil-home">
-            <strong class="p-2">
-                {{ post.autor.username }} <small class="text-muted" style="font-size: 12px;"> - {{ post.data_criacao.strftime('%d/%m/%Y %H:%M') }}
+    <div class="border mt-4 p-4 rounded-4 meupost shadow-sm" style="background-color: #f9f9f9;">
+        <!-- User Info -->
+        <div class="d-flex align-items-center mb-3">
+            <img src="{{ url_for('static', filename='images/' + (post.autor.foto_perfil)) }}" width="50" class="rounded-circle me-3 perfil-home">
+            <div>
+                <strong>{{ post.autor.username }}</strong>
+                <small class="text-muted d-block" style="font-size: 12px;">
+                    {{ post.data_criacao.strftime('%d/%m/%Y %H:%M') }}
                     {% if form %}
-                         - Editar Postagem
+                        - <a href="#" class="text-decoration-underline" style="font-size: 12px;">Editar Postagem</a>
                     {% endif %}
                 </small>
-            </strong>
-            <div class="row justify-content-center">
-                <div class="col" style="text-align: center">
-                    <div class="d-flex justify-content-center c-perfume">
-                        {% for perfume in post.autor.perfumes.split(';') %}
-                            <button type="button" class="btn btn-success mt-2 me-2" disabled>{{ perfume }}</button>
-                        {% endfor %}
-                    </div>
-                </div>
             </div>
         </div>
-        <div class="col-9">
-            <a href="{{ url_for('exibir_post', post_id=post.id)}}" class="link-post">
-                <h3>{{ post.titulo }}</h3>
+
+        <!-- Post Content -->
+        <div>
+            <a href="{{ url_for('exibir_post', post_id=post.id)}}" class="link-post post-link" style="color: #0073b1;">
+                <h3 class="mb-3" style="font-family: 'Arial', sans-serif; font-weight: 600; color: #333;">
+                    {{ post.titulo }}
+                </h3>
             </a>
-            
             <p>{{ post.corpo }}</p>
         </div>
     </div>
-    {% endfor%}
+    {% endfor %}
 </div>
 
+<!-- Custom CSS -->
+<style>
+    /* Link de Post com Underline e Hover Azul */
+    .post-link {
+        text-decoration: none;
+        color: #0073b1;  /* Cor azul similar ao LinkedIn */
+        font-weight: 600;
+    }
 
+    .post-link:hover {
+        text-decoration: underline;
+        color: #005f8e;  /* Azul mais escuro no hover */
+    }
+
+    /* Estilo do Título */
+    .title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    /* Linha decorativa abaixo do título */
+    .title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background-color: #007bff;
+        margin: 8px auto 0;
+        border-radius: 4px;
+    }
+</style>
 {% endblock %}
-    

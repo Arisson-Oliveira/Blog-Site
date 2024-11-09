@@ -7,7 +7,7 @@
 
     <div class="row justify-content-center">
         <!-- Formuláriol -->
-        <div class="col-md-5">
+        <div class="col-md-5 form-div">
             <form method="POST" action="" class="border p-4 mt-2 shadow-sm rounded">
                 {{ form.csrf_token }}
                 <fieldset>
@@ -22,7 +22,7 @@
                                 {% endfor %}
                             </div>
                             {% else %}
-                                {{ form.titulo(class="form-control") }}
+                                {{ form.titulo(class="form-control titulo-post") }}
                             {% endif %}
                     </div>
                     <div class="form-group mb-3">
@@ -36,11 +36,11 @@
                                 {% endfor %}
                             </div>
                             {% else %}
-                                {{ form.corpo(class="form-control") }}
+                                {{ form.corpo(class="form-control description-post") }}
                             {% endif %}
                     </div>
                 </fieldset>
-                <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
+                <button type="submit" name="btn_submit_login" class="btn btn-primary-post w-100">
                     {{ form.btn_submit.label }}
                 </button>
             </form>

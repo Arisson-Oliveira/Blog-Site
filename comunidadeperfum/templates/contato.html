@@ -3,48 +3,41 @@
 {% block title %}Contato{% endblock %}
 
 {% block body %}
-<div class="container">
-	<div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="well well-sm" text>
-          <form class="form-horizontal" action="" method="post">
-          <fieldset>
-            <legend><strong>Contato</strong></legend>
-    
-            <!-- Name input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="name">Name</label>
-              <div class="col-md-9">
-                <input id="name" name="name" type="text" placeholder="Your name" class="form-control">
-              </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <form class="form-horizontal" action="" method="post">
+                    <fieldset>
+                        <legend class="text-center mb-4"><strong>Contato</strong></legend>
+                        
+                        <!-- Name input-->
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Nome</label>
+                            <input id="name" name="name" type="text" placeholder="Seu nome" class="form-control">
+                        </div>
+                        
+                        <!-- Email input-->
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Seu E-mail</label>
+                            <input id="email" name="email" type="email" placeholder="Seu email" class="form-control">
+                        </div>
+                        
+                        <!-- Message body -->
+                        <div class="form-group mb-3">
+                            <label for="message" class="form-label">Sua mensagem</label>
+                            <textarea id="message" name="message" placeholder="Escreva sua mensagem aqui..." class="form-control" rows="5" style="resize: none; overflow: hidden; height: 200px;"></textarea>
+                        </div>
+                        
+                        <!-- Form actions -->
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary-contato btn-lg w-100" style="margin-top: -10px;">Enviar</button>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-    
-            <!-- Email input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="email">Your E-mail</label>
-              <div class="col-md-9">
-                <input id="email" name="email" type="text" placeholder="Your email" class="form-control">
-              </div>
-            </div>
-    
-            <!-- Message body -->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="message">Your message</label>
-              <div class="col-md-9">
-                <textarea class="form-control" id="message" name="message" placeholder="Please enter your message here..." rows="5"></textarea>
-              </div>
-            </div>
-    
-            <!-- Form actions -->
-            <div class="form-group">
-              <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-              </div>
-            </div>
-          </fieldset>
-          </form>
         </div>
-      </div>
-	</div>
+    </div>
 </div>
 {% endblock %}
+

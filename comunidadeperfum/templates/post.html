@@ -1,108 +1,75 @@
 {% extends 'base.html' %}
 
-
-
 {% block body %}
-
-<div class="container nt-3">
-    <div class="rol border mt-4 p-3 rounded-4 meupost">
-        <div class="col col-8 p-4">
-            <img src="{{ url_for('static', filename='images/' + (post.autor.foto_perfil)) }}" width="40" class="rounded-circle perfil-home">
-            <strong class="p-2">
-                {{ post.autor.username }} <small class="text-muted" style="font-size: 12px;"> - {{ post.data_criacao.strftime('%d/%m/%Y %H:%M') }}
-                    {% if form %}
-                         - <a href="#form_editarpost"><button type="button" class="btn btn-primary" style="padding: 5px 10px; font-size: 12px;">Editar Postagem</button></a> <a href="#" data-bs-toggle="modal" data-bs-target="#excluirpost"><button type="button" class="btn btn-primary btn-danger" style="padding: 5px 10px; font-size: 12px;">Excluir Postagem</button></a>
-                    {% endif %}
-                </small>
-            </strong>
-            <div class="row justify-content-center">
-                <div class="col" style="text-align: center">
-                    <div class="d-flex justify-content-center c-perfume">
-                        {% for perfume in post.autor.perfumes.split(';') %}
-                            <button type="button" class="btn btn-success mt-2 me-2" disabled>{{ perfume }}</button>
-                        {% endfor %}
+<div class="container mt-4">
+    <div class="row justify-content-center  m-post">
+        <!-- Coluna do Post -->
+        <div class="col-md-6">
+            <div class="border mt-2 p-3 rounded-4 meupost">
+                <div class="d-flex align-items-center mb-3">
+                    <img src="{{ url_for('static', filename='images/' + (post.autor.foto_perfil)) }}" width="40" class="rounded-circle perfil-home me-2">
+                    <div>
+                        <strong>{{ post.autor.username }}</strong>
+                        <small class="text-muted d-block" style="font-size: 12px;">{{ post.data_criacao.strftime('%d/%m/%Y %H:%M') }}</small>
                     </div>
+                </div>
+                <div class="d-flex justify-content-center flex-wrap">
+                    {% for perfume in post.autor.perfumes.split(';')[:3] %} <!-- Exibindo apenas 3 perfumes -->
+                        <button type="button" class="btn btn-success btn-sm mt-1 me-1" disabled>{{ perfume }}</button>
+                    {% endfor %}
+                </div>
+                <div class="mt-3">
+                    <h5>{{ post.titulo }}</h5>
+                    <p>{{ post.corpo }}</p>
+                    {% if form %}
+                        <a href="#form_editarpost" class="btn btn-primary btn-sm mt-2">Editar Postagem</a>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#excluirpost" class="btn btn-danger btn-sm mt-2">Excluir Postagem</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
-        <div class="col-9">
-            <h3>{{ post.titulo }}</h3> 
-            <p>{{ post.corpo }}</p>
-        </div>
-    </div>
-</div>
 
-{% if form %}
-
-<div class="container text-center">
-
-    <div class="row justify-content-center">
-        <!-- Formuláriol -->
+        <!-- Coluna do Formulário de Edição -->
+        {% if form %}
         <div class="col-md-5">
-            <form method="POST" action="" id="form_editarpost" class="border p-4 mt-2 shadow-sm rounded">
+            <form method="POST" action="" id="form_editarpost" class="border p-4 shadow-sm rounded">
                 {{ form.csrf_token }}
-                <legend>Editar Postagem</legend>
-                <fieldset>
-                    <div class="form-group mb-3">
-                        {{ form.titulo.label(class="form-label") }}
-                        
-                        {% if form.titulo.errors %}
-                            {{ form.titulo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.titulo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                                {{ form.titulo(class="form-control") }}
-                            {% endif %}
-                    </div>
-                    <div class="form-group mb-3">
-                        {{ form.corpo.label(class="form-label") }}
-                        
-                        {% if form.corpo.errors %}
-                            {{ form.corpo(class="form-control is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for erro in form.corpo.errors %}
-                                    {{ erro }}
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                                {{ form.corpo(class="form-control") }}
-                            {% endif %}
-                    </div>
-                </fieldset>
-                <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">
-                    {{ form.btn_submit.label }}
-                </button>
+                <legend class="text-center">Editar Postagem</legend>
+                <div class="form-group mb-3">
+                    {{ form.titulo.label(class="form-label") }}
+                    {{ form.titulo(class="form-control") }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.corpo.label(class="form-label") }}
+                    <!-- Removendo o redimensionamento e aumentando a altura -->
+                    {{ form.corpo(class="form-control", style="resize: none; overflow: hidden; height: 200px;") }}
+                </div>
+                <button type="submit" name="btn_submit_login" class="btn btn-primary w-100">{{ form.btn_submit.label }}</button>
             </form>
         </div>
+        {% endif %}
     </div>
 </div>
-
-{% endif %}
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="excluirpost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Postagem</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Excluir Postagem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Você quer mesmo excluir seu post? Essa ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                <form method="POST" action="{{ url_for('excluir_post', post_id=post.id)}}">
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          Você quer mesmo excluir seu post? Essa ação não pode ser desfeita.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
-          <form method="POST" action="{{ url_for('excluir_post', post_id=post.id)}}">
-                <button type="submit" class="btn btn-primary btn-danger">Excluir</button>
-        </form>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
 {% endblock %}
-    
